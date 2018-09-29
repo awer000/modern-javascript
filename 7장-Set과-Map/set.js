@@ -61,3 +61,17 @@ obj.process(setThis);
 let setToArr = new Set([1, 2, 3, 1, 2, 3]),
   spreadArr = [...setToArr];
 console.log(spreadArr); // 1,2,3
+
+let weakSet = new WeakSet(); // WeakSet 만들기
+
+weakSet.add({}); // WeakSet의 요소는 원시값이 올 수 없다. 객체값만 추가가 가능하다.
+
+// WeakSet은 add, delete, has 메서드 사용이 가능하다.
+// WeakSet은 전개연산자로 변환 불가능하다.
+
+let key = {};
+set.add(key);
+
+console.log(set.has(key)); // true;
+key = null;
+console.log(set.has(key)); // false;
