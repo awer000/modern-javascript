@@ -52,3 +52,36 @@ mapArr.forEach((value, key, map) => {
 // Weak Map 바깥에서 Weak Map 키에 대한 참조가 사라지면, 그에 해당하는 키 값 쌍은 제거된다.
 // Weak Map 키만 약한 참조이고 값은 가비지 컬렉션 되지 않는다.
 
+var Person = (function() {
+  var privateData = {};
+  var privateId = 0;
+
+  function Person(name) {
+    Object.defineProperty(this, "_id", { value: privateId++ });
+
+    privateData[this._id] = {
+      name: name
+    };
+  }
+  Person.prototype.getName = function() {
+    return privateData[this._id].name;
+  };
+  return Person;
+})();
+
+// 완전히 객체 내부의 모든 요소를 비공개 데이터로 만들었다.
+// 신기하다!!
+
+let Person = (function() {
+  let privateData = new WeakMap();
+
+  function Person(name) {
+    privateData.set(this, { name });
+  }
+
+  Person.prototype.getName = function() {
+    return privateData.get(this).name;
+  };
+
+  return Person;
+})();
