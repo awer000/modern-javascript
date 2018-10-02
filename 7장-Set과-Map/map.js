@@ -46,3 +46,9 @@ mapArr.forEach((value, key, map) => {
   console.log(value, key);
   console.log(map);
 });
+
+// Weak Map은 객체의 약한 참조를 저장하는 방식.
+// 모든 키는 객체여야 함.
+// Weak Map 바깥에서 Weak Map 키에 대한 참조가 사라지면, 그에 해당하는 키 값 쌍은 제거된다.
+// Weak Map 키만 약한 참조이고 값은 가비지 컬렉션 되지 않는다.
+
