@@ -74,3 +74,60 @@ collection.items.push(3);
 for (let x of collection) {
   console.log(x);
 }
+
+console.log(`--------내장 이터레이터---------`);
+console.log(`--------컬렉션 이터레이터---------`);
+
+// Array, Map, Set이라는 세 가지 타입의 컬렉션 객체가 있다.
+// 모두 내부 콘텐츠를 탐색하도록 돕는 내장 이터레이터를 가진다.
+
+// entries()는 값으로 키 값  쌍을 갖는 이터레이터를 반환한다.
+
+let colors = ["red", "green", "blue"];
+let tracking = new Set([1234, 5678, 9012]);
+let data = new Map();
+
+data.set("title", "Understanding ECMA6");
+data.set("format", "ebook");
+
+for (let entry of colors.entries()) {
+  console.log(entry);
+}
+
+for (let entry of tracking.entries()) {
+  console.log(entry);
+}
+
+for (let entry of data.entries()) {
+  console.log(entry);
+}
+
+// value()는 값으로 컬렉션의 값을 갖는 이터레이터를 반환한다.
+
+// for (let value of colors.values()) {
+//   console.log(value);
+// }
+
+// 배열에는 왜 values 메서드가 적용이 안될까?
+
+for (let value of tracking.values()) {
+  console.log(value);
+}
+
+for (let value of data.values()) {
+  console.log(value);
+}
+
+// keys 이터레이터는 각 키를 반환한다.
+
+for (let key of colors.keys()) {
+  console.log(key);
+}
+
+for (let key of tracking.keys()) {
+  console.log(key);
+}
+
+for (let key of data.keys()) {
+  console.log(key);
+}
