@@ -131,3 +131,9 @@ for (let key of tracking.keys()) {
 for (let key of data.keys()) {
   console.log(key);
 }
+
+// 문서 엘리먼트의 컬렉션을 나타내는 NodeList 타입에도 이터레이터가 포함되어 사용할 수 있다.
+
+// 전개 연산자를 사용하면 이터러블을 배열로 쉽게 바꿀 수 있다.
+
+console.log(`--------이터레이터의 고급 기능---------`);
