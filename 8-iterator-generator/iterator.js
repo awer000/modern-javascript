@@ -137,3 +137,93 @@ for (let key of data.keys()) {
 // 전개 연산자를 사용하면 이터러블을 배열로 쉽게 바꿀 수 있다.
 
 console.log(`--------이터레이터의 고급 기능---------`);
+
+console.log(`--------이터레이터에 인자 전달하기---------`);
+
+// next 메서드에 인자를 전달하면 그 인자가 제네레이터 yield 문의 값이 된다.
+
+// 처음 next 호출은 특별한 경우로, 어떤 인자를 전달하더라도 그 인자는 손실된다.
+// 할당문을 포함하는 yield문에서 표현식의 오른쪽은 첫 next() 호출에서 평가되고 표현식의 왼쪽은 함수 실행을 멈추고 있다가
+// 두 번째 next() 호출에서 평가된다.
+
+function* createIterator() {
+  let first = yield 1;
+  let second = yield first + 2;
+  yield second + 3;
+  return "hi";
+}
+
+let iterator3 = createIterator();
+
+console.log(iterator3.next());
+console.log(iterator3.next(3));
+console.log(iterator3.next(4));
+console.log(iterator3.next());
+
+console.log(`--------이터레이터에 에러 발생 시키기---------`);
+
+// 다시 수행될 때 에러를 발생시키도록 지시하는 throw() 메서드를 실행할 수 있다.
+
+console.log(`--------제너레이터 위임하기---------`);
+
+// 제너레이터는 yield와 *를 함께  사용하여 다른 이터레이터에 동작을 위임할 수 있다.
+// 각  next 호출은 createNumberIterator()와 createColorIterator() 가 모두 비워질 때까지
+// 적절한 이터레이터에 위임된다. 그러고 나서 마지막 yield가 실행되어 true가 반환된다.
+
+function* createNumberIterator() {
+  yield 1;
+  yield 2;
+}
+
+function* createColorIterator() {
+  yield "red";
+  yield "green";
+}
+
+function* createCombinedIterator() {
+  yield* createNumberIterator();
+  yield* createColorIterator();
+  yield true;
+}
+
+const iterator4 = createCombinedIterator();
+
+console.log(iterator4.next());
+console.log(iterator4.next());
+console.log(iterator4.next());
+console.log(iterator4.next());
+console.log(iterator4.next());
+console.log(iterator4.next());
+
+console.log("------------------------------------");
+
+// 제너레이터 위임값을 통해 제네레이터 반환 값을 더 잘 사용할 수 있다.
+// 어떤 next 메서드에서도 3은 출력되지 않았다.
+// 여기서는 createCombinedIterator 안에서만 존재한다.
+// 필요에 따라 yield 문을 추가하여 그 값을 출력할 수는 있다.
+
+function* createNumberIterator2() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+
+function* createRepeatingIterator2(count) {
+  for (let i = 0; i < count; i++) {
+    yield "repeat";
+  }
+}
+
+function* createCombinedIterator2() {
+  let result = yield* createNumberIterator2();
+  yield* createRepeatingIterator2(result);
+}
+
+const iterator5 = createCombinedIterator2();
+
+console.log(iterator5.next());
+console.log(iterator5.next());
+console.log(iterator5.next());
+console.log(iterator5.next());
+console.log(iterator5.next());
+console.log(iterator5.next());
