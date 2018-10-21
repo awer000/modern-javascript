@@ -227,3 +227,37 @@ console.log(iterator5.next());
 console.log(iterator5.next());
 console.log(iterator5.next());
 console.log(iterator5.next());
+
+console.log("------------비동기 작업 수행-----------");
+
+function run(taskDef) {
+  let task = taskDef();
+  let result = task.next();
+
+  function step() {
+    if (!result.done) {
+      if (typeof result.value === "function") {
+        result.value(function(err, data) {
+          if (err) {
+            result = task.throw(err);
+            return;
+          }
+          result = task.next(data);
+          step();
+        });
+      } else {
+        result = task.next(result.value);
+        step();
+      }
+    }
+  }
+  step();
+}
+
+run(function*() {
+  let value = yield 1;
+  console.log(value);
+
+  value = yield value + 3;
+  console.log(value);
+});
