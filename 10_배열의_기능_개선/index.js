@@ -79,5 +79,29 @@ const buffer2 = buffer.slice(4, 6);
 console.log(buffer2);
 console.log(buffer);
 
+// 배열 버퍼는 메모리 장소를 나타내고, 뷰는 메모리를 조작하는 데 사용할 인터페이스이다.
+// 배열 버퍼에서 DataView 타입은 여덟 가지 숫자 데이터 타입 연산을 가능하게 하는 일반적인 뷰이다.
+// DataView를 사용하려면 먼저 ArrayBuffer의 인스턴스를 만들고, 이 인스턴스를 사용하여 새로운 DataView를 만든다.
+
 const view = new DataView(buffer);
 console.log(view);
+
+// 자바스크립트의 여덟 가지 숫자 데이터 타입을 위해 DataView 프로토타입은 배열 버퍼에서
+// 데이터를 읽고 쓰는 메서드를 가진다.
+// 이 메서드 이름은 모두 set이나 get으로 시작하고 데이터 타입의 줄임말을 뒤에 붙인다.
+
+const buffer3 = new ArrayBuffer(2);
+const view3 = new DataView(buffer3);
+view3.setInt8(0, 5);
+view3.setInt8(1, -1);
+
+console.log(view3.getInt8(0));
+console.log(view3.getInt8(1));
+
+// 뷰는 데이터가 저장된 방법에 상관 없이 어떤 시점에 어떤 형식으로든 읽고 쓸 수 있다.
+// 다음과 같은 예도 동작한다.
+
+console.log(view3.getInt16(0)); // 1535
+
+// 다양한 데이터 타입을 혼합해서 사용할 수 있지만,
+// 특정 데이터 타입만을 사용한다면 타입을 명시하는 뷰를 쓸 수 있다.
