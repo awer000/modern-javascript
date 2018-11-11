@@ -114,3 +114,34 @@ const p2 = Promise.resolve(thenable2);
 p2.catch((err) => {
   console.log(err);
 });
+
+console.log('-------전역 프로미스 실패 처리---------');
+
+// 프로미스에서 가장 논란이 되는 부분은 프로미스가 실패 핸들러 없이 실패했을 때 발생하는 암묵적인 실패이다.
+// 프로미스는 즉시 실패하지만 특정 시점까지 처리되지 않는다.
+
+console.log('Node.js 실패 처리');
+
+// process 객체에서 두 개의 이벤트를 발생시킨다.
+// unhandleRejection - 프로미스가 실패하고 같은 이벤트 루프 턴에서 실패 핸들러가 호출되지 않으면 발생.
+// 인자로 실패 이유와 실패한 프로미스가 전달된다.
+
+let rejected;
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.log(reason.message); // 'explosion!'
+  console.log(rejected === promise); // true
+});
+
+rejected = Promise.reject(new Error('explosion!'));
+
+// rejectionHandled - 프로미스가 실패하고 이벤트 루프의 턴 이후 실패 핸들러가 호출되면 발생.
+// 한 개의 인자만 받고, 실패한 프로미스이다.
+
+let rejected2;
+
+process.on('rejectionHandled', (promise) => {
+  console.log(rejected2 === promise);
+});
+
+rejected2 = Promise.reject(new Error('new Error'));
