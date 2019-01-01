@@ -145,3 +145,29 @@ process.on('rejectionHandled', (promise) => {
 });
 
 rejected2 = Promise.reject(new Error('new Error'));
+
+// ----------11.4 프로미스 연결하기----------------
+
+// 각 then 이나 catch 호출은 또 다른 프로미스를 만들어 반환한다. 
+// 이 두번째 프로미스는 첫번째 프로미스가 성공하거나 실패했을 때만 처리된다.
+
+let p1 = new Promise(function(res,rej) {
+  resolve(42);
+})
+
+p1.then(function(value) {
+  console.log(value)
+}).then(function() {
+  console.log('Finished')
+})
+
+// p1.then 호출은 then이 호출될 때 두번째 프로미스를 반환한다.
+// 두번째 then 성공 핸들러는 첫 번째 프로미스가 처리된 후에만 호출된다.
+
+
+// 11.4.1 에러 처리 
+
+// 프로미스 연결에서는 이전 프로미스의 성공 핸들러나 실패 핸들러에서 발생한 에러를 잡을 수 있다.
+
+
+
